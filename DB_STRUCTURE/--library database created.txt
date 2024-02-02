@@ -1,0 +1,56 @@
+--library database created
+create database library
+--open database 
+use library
+-- 1.students CRUD
+-- create student table
+create table students(
+    stud_id int not null auto_increment primary key,
+    student_name varchar(225),
+    class varchar(50),
+    mobile varchar(10),
+    password text
+)
+-- insert students records
+insert into students(student_name, class ,mobile,password)values('sk','bca','878678659','sk@123')
+-- view all students records 
+select * from students
+-- update students records
+update students set student_name='sk', class='mca', mobile='878678659', password='sk@123' where stud_id=1
+-- delete students records
+delete from students where stud_id=2
+--2.books CRUD
+-- create books table 
+create table books(
+    book_id int not null auto_increment primary key,
+    book_name varchar(225),
+    department varchar(225),
+    class varchar(225)
+)
+-- insert books records 
+insert into books (book_name , department,class) values('c++','cs','bca')
+-- view all books records 
+select * from books
+-- update all books records 
+update books set book_name='c++' , department='cs',class='mca' where book_id = 1
+-- delete books records
+delete from books where book_id=2
+-- 3.book_issue_details CRU
+-- create book_issue_details table
+create table book_issue_details(
+	book_issue_id int auto_increment primary key,
+	book_id int,
+	stud_id int,
+	issue_date timestamp default current_timestamp,
+	due_date timestamp,
+    return_date timestamp,
+	late_fine int default 0,
+	is_submmited boolean default 0,
+    FOREIGN KEY (book_id) REFERENCES books(book_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (stud_id) REFERENCES students(stud_id) ON DELETE CASCADE ON UPDATE CASCADE
+)
+-- view book_issue_details
+SELECT book_issue_id , book_name , student_name ,issue_date ,due_date ,return_date,late_fine,is_submmited
+FROM book_issue_details 
+INNER JOIN students ON book_issue_details.stud_id = students.stud_id
+INNER JOIN books ON book_issue_details.book_id = books.book_id;
