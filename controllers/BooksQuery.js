@@ -4,7 +4,7 @@ const { validationResult, body } = require('express-validator');
 const validationRules = [
     body('book_name').notEmpty().withMessage('Book name is required'),
     body('student_class').notEmpty().withMessage('Student class is required'),
-    body('department').notEmpty().withMessage('Mobile is required')
+    body('department').notEmpty().withMessage('Department is required')
 ];
 const insertbookRecord = async (req,res) =>{
     try {
